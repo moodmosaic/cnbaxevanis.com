@@ -1,5 +1,7 @@
 # Constantin N. Baxevanis
 
+<img src="/img/cnbaxevanis.jpg" alt="CNBaxevanis" align="right">
+
 **Dr. Constantin Baxevanis** is one of the leading scientists in the development of cancer vaccines and cancer immunotherapy. He has throughout the last 20 years developed various strategies in immunological treatment of cancer. He is actively involved in ongoing vaccine trials as well as in translational research aiming at the identification of prognostic and predictive biomarkers and he has put major efforts into the development of various cancer immunotherapeutic strategies.
 
 ## Biography
