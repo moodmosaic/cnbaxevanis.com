@@ -1,183 +1,68 @@
-# Message Templates
+# Constantin N. Baxevanis
 
-A language-neutral specification for 1) _capturing_, and 2) _rendering_, structured log events in a format that’s both human-friendly and machine-readable.
+**Dr. Constantin Baxevanis** is one of the leading scientists in the development of cancer vaccines and cancer immunotherapy. He has throughout the last 20 years developed various strategies in immunological treatment of cancer. He is actively involved in ongoing vaccine trials as well as in translational research aiming at the identification of prognostic and predictive biomarkers and he has put major efforts into the development of various cancer immunotherapeutic strategies.
 
-[![Message Templates](https://messagetemplates.org/img/MessageTemplates.png){: .hidpi }](https://messagetemplates.org/img/MessageTemplates.png)
+## Biography
 
-This document explains the reasons message templates are used, and provides a specification of their syntax, capturing behavior, and rendering behavior, to assist in creating implementations for various programming languages and logging interfaces.
+Constantin Baxevanis was born on December 10, 1956 and grew up in a poor suburb of Pireaus, Tampouria-Keratsini, Greece. His father Nikolaos, was a technical engineer in Olympic Airways, the ex-national carrier of Greece, and his mother Simela was a housewife. His great grandfather, Stratos Baxevanis, was head of a Turkish warship fighting against the Algerian pirates in Agean sea. He was killed in one of these battles. His grandfather Constantinos Baxevanis was born in Ayvalik (Izmir) (when Izmir was still overpopulated by Greek citizens). He was a captain and with his cargo ship was transferring goods from Izmir to Piraeus. His grandmother, Aikaterini Makrylou, was born in Kalymnos. From his mother’s site, both grandfather (Charalambos Mikropoulos) and grandmother (Anastasia Emirza) were born in Trabzon (black sea).His older sister, Aikaterini (Katina),worked as a secretary in Olympic Airways. Constantin on the other hand, chose a path in bio-medical science and in particular immunology. Constantin married Katerina Sarri, a Cytogenetist, in 1984. They became parents to Nikolaos (1984), Gregory (1988) and Maria-Zampia (1996).
 
-## A brief history of structured logging APIs
+## The first footsteps in the field of Immunology
 
-Early application logging, or **`printf` debugging**, produced a stream of text describing the events taking place within an application.
+Baxevanis received his diploma in Biology at the Eberhard-Karls-University of Tuebingen in December 2, 1980. He finished with the degree of excellence his diploma work on “Inhibition of Immune response gene regulated T-cell proliferative response by Ia-specific monoclonal antibodies” at the department of Immunogenetics, Max-Planck Institute, Tuebingen. His Ph.D. was actually a continuation of his diploma work. He worked on the “Genetic control of immune responses to the enzyme Lactate Dehydrogenase B4 (LDH-B)” at the same department in Max-Planck Institute under the supervision of Zoltan Nagy and Jan Klein. In August 17, 1984 he received his Ph.D. degree in Immunogenetics at the Eberhard-Karls-University of Tuebingen with “magna cum laude”. During these years at Max-Planck Institute, Dr. Baxevanis did some important discoveries in the field of genetic-restriction of T cell responses to synthetic peptides. He was the first to demonstrate that Immune response (Ir) genes are linked to the major histocompatibility complex (MHC) and to show that the MHC-linked Ir genes control the responsiveness to T-dependent antigens. His third achievement was the finding that the Ir-gene products were the so-called Ia antigens which were mapped into the I-A and I-E regions of the mouse H-2 complex (Immunogenetics, 1980;11:617;Proc Natl AcadSci U S A. 1981;78:3809; J Exp Med. 1982;156:822). In September 1982, he initiated his post-doctoral studies at Max-Planck Institute in Tuebingen and during this period he visited Prof Chella David at Mayo Clinic College of Medicine and later on he travelled to Dana Farber Cancer Institute, Boston, where he worked as research fellow with Baruj Benaceraff. In August 1983, he got a position at the Immunology Department of G. Papanikolau Research Center at St Sava’s Cancer Hospital (later on Cancer Immunology and Immunotherapy Center; CIIC) where he worked as research fellow until 1985, the year when he started his military service.
 
-```c
-log("User %s logged in from %s", username, ipAddress);
-  // -> 2016-05-27T13:02:11.888 User alice logged in from 123.45.67.89
-```
+## The years at CIIC
 
-This worked well for simple applications running on a single computer, and over the years many tools evolved to help support this format in ever-more-complex, and ever-more-distributed applications. Log parsing can extract most of the relevant information from the event above, but considerable effort is required for non-trivial diagnostic scenarios.
+After finishing his military service, he got a permanent position at the Immunology Department of St Sava’s Cancer Hospital (1987). He worked for the next 4 years a senior investigator, and then at the CIIC (a part of the Immunology Department) until 1998, the year when he became director of the Cellular Immunology Laboratory. In 2004, he became scientific director of the CIIC. From 2014 he is also the head of the Immunology Department. In 1991, he visited the Biochemistry Department of the Pasteur Institute in Paris where he worked as research fellow for 1 year analyzing the mechanisms of action of Prothymosin alpha on the immune system. His research at the CIIC was initially focused human cellular adaptive immunity in patients with autoimmune diseases. He further became interested in the innate immune system, in particular monocytes. Inspired by his research, Constantin gave lectures in immunology at various universities of Greece and also in Europe and was also invited in many conferences as a speaker.
 
-At various times, alternatives to text logs have been proposed under the banner of [structured logging](http://gregoryszorc.com/blog/2012/12/06/thoughts-on-logging---part-1---structured-logging/), which considers log data to be a stream of fully-structured events with key/value properties. Structured log events are much easier to work with in large, complex and distributed applications, because relevant events can be identified using queries over their properties, rather than by regular expressions over a text payload.
+## Studies in Cancer Immunology and Immunotherapy at CIIC
 
-The obvious method of recording structured log events, found particularly in languages with terse key/value property syntax, is to **encode the event directly** as a map of key/value pairs:
+Of his many contributions to basic cancer immunology, including work in mouse models and clinical immunology, the most striking highlights are the eradication of large vascularized mouse tumors by adoptive transfer of cytotoxic T lymphocytes genetically engineered to express chimeric antigen scFv receptors directed against a molecularly defined T cell epitope of an oncogene-encoded protein(Cancer Immunol.Immunother. 2004;53:893; Cancer Immunol.Immunother. 2003;52:513) as well as the discovery that T cell help for cytotoxic T lymphocyte induction involves cognate interaction between CD40 ligand on T helper cells and CD40 on dendritic cells in 2000 (J. Immunol. 2000;164:3902). This is now recognized as a major pathway of cytotoxic T lymphocyte induction in non-inflammatory conditions. 
 
-```javascript
-log({eventId: "user_logged_in", username: username, ip_address: ipAddress });
-   // -> {"time": "2016-05-27T13:02:11.888", "eventId": "user_logged_in",
-   //     "username": "alice", "ip_address": "123.45.67.89"}
-```
+## Cancer Vaccines; from idea to clinical trials
 
-JSON is used as an example rendering here, but the concept is not tied to a particular representation.
+The finding that tumor cell lines when implanted into mice were killed by the animal’s immune system was fascinating in a time with the development of the cancer immunosurveillance theory and cancer immunoediting hypothesis.  In light of these discoveries, Baxevanis positioned himself early in the development of peptide vaccines based on chemical modifications or aminoacid substitutions. He has been actively involved in the identification and functional characterization of novel immunogenic HER-2/neu peptides. These peptides have been tested in vitro and in vivo in various transplantable tumour models as well as in animals developing spontaneously mammary adenocarcinomas, both as protective and therapeutic cancer vaccines. In all these models, HER-2/neu peptides have shown great antitumour capacities, providing the poof-of-concept for their use in phase I clinical trials (Immunotherapy, 2010;2:213; Cancer Immunol.Immunother. 2010 ;59:715; Cancer Immunol.Immunother. 2010 ;59:715; Vaccine, 2009;27:4704; 
+J.Immunol.2008;181:146;CancerRes.2006; 66:5452;Cancer Immunol.Immunother. 2006;55:85;CancerImmunol.Immunother.2003;52:771;CancerImmunol.Immunother. 2002;50:615).Especially, the study published in Cancer Res. (2006;66:5452-60) shows that a substitution of a single aminoacid, renders a “self” tumour peptide highly immunogenic functioning as a potent therapeutic vaccine.
 
-This greatly improves machine-readability, enabling queries like `username = 'alice'` on the raw log stream, but the event itself is not _human-friendly_. Log events recorded in prose make full use of our language processing and pattern recognition abilities to ease cognition. A long stream of key/value pairs is painful to visually process. Compare the representative output of the two examples above to experience this effect - what's happening in the second event?
+## Clinical trials. The prostate phase I study.
 
-Another approach employs **convention** to identify properties within a `printf`-style message:
+Dr.Baxevanis coordinated the first phase I vaccination trial of a chemically modified peptide, the Ii-Key/HER-2/neu(776-790) hybrid peptide vaccine (AE37) with recombinant granulocyte macrophage colony-stimulating factor (GM-CSF) as adjuvant in patients with HER-2/neu(+) prostate cancer(Clin. Cancer Res. 2010;16:3495). The primary end points of the study were to evaluate toxicity and monitor patients' immune responses to the vaccine. Thirty-two HER-2/neu(+), castrate-sensitive, and castrate-resistant prostate cancer patients were enrolled. Of these, 29 patients completed all six vaccination cycles with AE37. The AE37 vaccine was proved to be safe and capable of inducing HER-2/neu-specific cellular immune responses in patients, thus emphasizing the potential of AE37 to target HER-2/neu for the immunotherapy of prostate cancer. Later on analyses showed a direct correlation between immunological and clinical responses to the vaccine(J Immunother. Cancer. 2016;4:75; Cancer Immunol.Immunother. 2015;64:1123). In an effort to define predictive biomarkers Baxevanis and his collaborators have shown that preexisting (i.e., before vaccinations with AE37) levels of vaccine-specific IFN-γ immunity and plasma TGF-β, among HLA-A*24 and/or HLA-DRB1*11 positive patients, were strong indicators for immunological responses to AE37 treatment ( Cancer.Immunol. Immunother. 2014;63:1141; Cancer Immunol. Immunother. 2013;62:1599). 
 
-```c
-log("User username=%s logged in from ip_address=%s", username, ipAddress);
-  // -> 2016-05-27T13:02:11.888 User username=alice logged in from ip_address=123.45.67.89
-```
+## Clinical trials. The breast phase II study.
 
-In principle, this technique benefits from greater readability, but in practice the looseness of the format causes ambiguities when parsing, and inconsistent usage within development teams. Ambiguities arise when a property inserted into the event contains embedded spaces and/or `=` characters. The lack of a defined grammar (and lack of awareness of the grammar in the logging tool) means developers have no opportunity to validate their use of the syntax – breaking the convention is easy and goes unnoticed.
+CIIC, was the European clinical site of a phase II US prospective, randomized, multicenter phase II adjuvant trial to evaluate the efficacy of the AE37 vaccine. Clinically disease-free node-positive and high-risk node-negative breast cancer patients with tumors expressing any degree of HER2 [immunohistochemistry (IHC) 1-3+] were enrolled. Patients were randomized to AE37 + GM-CSF versus GM-CSF alone. Toxicity was monitored. Clinical recurrences were documented and disease-free survival (DFS) analyzed. The overall intention-to-treat analysis demonstrated no benefit to vaccination. However, the results confirmed that the vaccine was safe and suggested that vaccination may have clinical benefit in patients with low HER2-expressing tumors, specifically triple-negative breast cancer (Ann Oncol. 2016 ;27:1241). 
 
-Finally, niche logging systems like [Event Tracing for Windows](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363668.aspx) have taken a middle ground, combining event ids in the log event with a manifest of format specifiers describing how a particular event can be rendered as text. Despite the near-perfect balance of performance, human-friendliness and machine-readability, the effort associated with assigning event ids and managing manifests have an impact on development-time ergonomics that limit the appeal of this system.
+## Clinical trials. The GP2 phase II study.
 
-All of these issues and shortcomings have kept fully-structured logging from reaching widespread adoption, but the need for it has continued to grow.
+GP2 is a HER2-derived, HLA-A2+ restricted peptide. Phase I studies showed GP2 administered with GM-CSF to be safe and immunogenic. CIIC, was again the European site of an US multicenter phase II prospective, randomized, adjuvant trial conducted to determine the vaccine's efficacy. The trial enrolled HLA-A2+, clinically disease-free, node-positive and high-risk node-negative breast cancer patients with tumors expressing HER2 (immunohistochemistry [IHC] 1+-3+). Patients were randomized to GP2+GM-CSF versus GM-CSF alone. Disease-free survival (DFS) was analyzed in intention-to-treat (ITT) and per-treatment cohorts; pre-specified subgroup analyses were performed for patients with IHC 3+ or FISH+ disease. The trial enrolled 180 patients; 89 received GP2+GM-CSF and 91 received GM-CSF alone. The groups were well-matched for clinicopathologic characteristics. Toxicities have been minimal. While the overall ITT analysis did not demonstrate benefit to vaccination, this trial confirmed that the GP2 vaccine is safe and suggested that vaccination may have clinical activity, particularly in patients with HER2 overexpression who received the full vaccine series (ie per-treatment group)(Oncotarget, 2016;7:66192).
 
-## Message templates overview
+## International scientific/industrial partners
 
-Message templates take the best of all these approaches to provide optimal human-friendliness, perfect machine-readability and excellent development-time ergonomics.
+* Prof. Robert Rees, The John van Geest Cancer Research Centre; Nottingham Trent University; Nottingham, UK.
+* Prof. Graham Pockley, The John van Geest Cancer Research Centre; Nottingham Trent University; Nottingham, UK.
+* Prof. Graham Pawelec, Department of Internal Medicine II, Centre for Medical Research, Medical School, University of Tübingen, Tübingen ,Germany.
+* Prof. Hans-Georg Rammensee, Institute for Cell Biology; Department of Immunology; University of Tübingen; Tübingen , Germany.
+* Prof. Wolfgang Voelter, Interfaculty Institute of Biochemistry, University of Tübingen, Germany.
+* Prof. Hubert Kalbacher, Interfaculty Institute of Biochemistry, University of Tübingen, Germany.
+* Dr. Cecile Gouttefangeas, Interfaculty Institute for Cell Biology, Department of Immunology, Tübingen, Germany.
+* Prof. Barbara Seliger, Institute of Medical Immunology, Martin Luther University Halle-Wittenberg, Halle (Saale), Germany.
+* Prof. Federica Cavallo, Department of Molecular Biotechnology and Health Sciences, Molecular Biotechnology Center, University of Turin, Turin, Italy.
+* Prof Giuseppe Masucci, Karolinska Institutet, Stockholm, Sweden.
+* Dr. George Peoples, Department of Surgery, Uniformed Services University of Health Sciences, Bethesda, MD, USA.
+* Dr. Elisabeth Mittendorf, Department of Breast Surgical Oncology, University of Texas MD Anderson Cancer Center, Houston, TX, USA.
+* Prof. Gosse J. Adema, Chair in Molecular Immunology, Department of Tumor Immunology, RIMLS / 278 TIL, Radboud University Medical Centre, Nijmegen, The Netherlands.
+* Prof. Zelig Eshhar, PhD, Professor of Immunology, Department of Immunology, The Weizmann Institute of Science, Rehovot / Principal Investigator (PI) of the groups at Tel Aviv Sourasky Medical Center, Tel Aviv, Israel.
+*  Prof. Zvi G. Fridlender, MD MSc., Head, Center for COPD & smoking damage, Head, Laboratory of lung cancer research, Secretary, Israel Society of Pulmonology Inst. of Pulmonary Medicine, Hadassah-Hebrew University Medical Center, Jerusalem, Israel / Adjunct assistant Professor of Medicine, University of Pennsylvania.
+*  Prof. Wolf H. Fridman, MD, DSc, Professor of Immunology and Vice Dean at the Paris Descartes University Medical School/ Director at Cordeliers Research Centre, INSERM, Paris, France.
+*  Prof. Ravit Geva, MD, Medical Oncology Specialist, Head GIT malignancies Center, Head Research Unit, Division of Oncology, Tel Aviv Sourasky Medical Center, Tel Aviv, Israel. 
+* Prof. Nathan Karin, PhD, Professor of Immunology, Department of Immunology, Chairman, Rappaport Inst., Rappaport Faculty of Medicine, Technion-Israel Institute of Technology, Haifa, Israel.
+* Prof. Viktor Umansky, PhD, Group Leader, Clinical Cooperation Unit Dermato-Oncology (G300), German Cancer Research Center (DKFZ), Foundation under Public Law, Heidelberg, Germany.
+* Prof. Dr. Theresa L. Whiteside, PhD, MDHC, Professor of Pathology, Immunology and Otolaryngology, University of Pittsburgh Cancer Institute, Pittsburgh, PA, USA.
+* Dr. Eric von Hofe, Antigen Express Inc. Boston, USA
+* Dr. Paul Lehmann  C.T.L. Cellular Technology Limited, Ohio, USA
+* Dr. Attila Edelmann C.T.L. Europe GmbH, Germany
+* Dr. Toni Weinschenk  Immatics biotechnologies GmbH, Germany
+* Prof. Luigi Aurisicchio, Takis, s.r.l. Via di Castel Romano, Rome, Italy.
 
-A message template is a format specifier with _named holes_ for event data:
+## Hobbies
 
-```
-User {username} logged in from {ip_address}
-```
-
-Message templates are unique in that they provide a means of _capturing_ the event, as well as a means of _rendering_ it into human-friendly text.
-
-Logging APIs capture log events by positionally matching arguments with the named holes:
-
-```c
-log("User {username} logged in from {ip_address}", username, ipAddress)
-  // -> {
-  //      "time": "2016-05-27T13:02:11.888",
-  //      "template": "User {username} logged in from {ip_address}", 
-  //      "username": "alice", 
-  //      "ip_address": "123.45.67.89"
-  //    }
-```
-
-An event captured using a message template is not immediately rendered into text unless it is being displayed directly to a user. Instead, the template itself is captured, along with property values for each argument. This is stored in an intermediate representation like JSON for processing.
-
-Because the template remains constant regardless of the actual property values substituted, it is possible to treat the template as an _event type_ that identifies all events from the same template. In this example, log-ins from various users will carry the different `username` values, but the consistent message template shared by all of them means they can be retrieved as a group.
-
-When the event is displayed to a human user, or searched for text, it is _rendered_ by replacing each of the named holes with the corresponding property:
-
-```c
-// -> User alice logged in from 123.45.67.89 
-```
-
-## Syntax
-
-A message template is a block of text with embedded _holes_ that name a property to be captured and inserted into the text.
-
-* Property names are written between `{` and `}` brackets
-* Brackets can be escaped by doubling them, e.g. {% raw %}`{{`{% endraw %} will be rendered as `{`
-* Property names may be prefixed with an optional operator, `@` or `$`, to control how a property is captured
-* Property names may be suffixed with an optional format, e.g. `:000`, to control how the property is rendered; the formatting semantics are application-dependent, and thus require the formatted value to be captured alongside the raw property if rendering is to take place in a different environment
-
-The grammar below is maintained in the [messagetemplates/grammar](https://github.com/messagetemplates/grammar) repository.
-
-### Template
-
-![Template](https://messagetemplates.org/img/railroad/Template.png)
-
-```
-Template ::= ( Text | Hole )*
-```
-
-### Text
-
-![Text](https://messagetemplates.org/img/railroad/Text.png)
-
-```
-{% raw %}Text ::= ( [^\{] | '{{' | '}}' )+{% endraw %}
-```
-
-### Hole
-
-![Hole](https://messagetemplates.org/img/railroad/Hole.png)
-
-```
-Hole ::= '{' ( '@' | '$' )? ( PropertyName | Index ) ( ',' Alignment )? ( ':' Format )? '}'
-```
-
-### Name
-
-![Name](https://messagetemplates.org/img/railroad/Name.png)
-
-```
-Name ::= [0-9A-z_]+
-```
-
-### Index
-
-![Index](https://messagetemplates.org/img/railroad/Index.png)
-
-```
-Index ::= [0-9]+
-```
-
-### Format
-
-![Format](https://messagetemplates.org/img/railroad/Format.png)
-
-```
-Format ::= [^\{]+
-```
-
-### Alignment
-
-![Alignment](https://messagetemplates.org/img/railroad/Alignment.png)
-
-```
-Alignment ::= '-'? [0-9]+
-```
-
-## Capturing rules
-
-A message template may be used to _capture_ properties when provided a list of argument values. Each property in the message template is associated with exactly one value in the argument list.
-
-* Templates that use numeric property names like `{0}` and `{1}` exclusively imply that arguments to the template are captured by numeric index
-* If any of the property names are non-numeric, then all arguments are captured by matching left-to-right with holes in the order in which they appear
-
-## Rendering semantics
-
-Given a set of property values, and a message template, implementations should render the template by substituting property values into the locations of the corresponding _named holes_.
-
-Message template rendering should optimize for legibility and the conventions, culture, and context into which the message is being rendered:
-
- * Named holes without corresponding property values may be rendered as the original `{...}` token, _or_ a blank/empty/sentinel value may be substituted
- * Numeric values, dates, times and similar data may be rendered in culture-specific format
- * Complex data may be presented in a format most familiar to the user
-
-## Implementations
-
-The following logging libraries have support for message templates.
-
- * [Emit](https://github.com/emit-rs/emit) (Rust*)
- * [FsMessageTemplates](https://github.com/messagetemplates/messagetemplates-fsharp) (F#)
- * [LibLog](https://github.com/damianh/LibLog) (C#)
- * [Logary](https://github.com/logary/logary) (F#)
- * [MessageTemplates](https://github.com/messagetemplates/messagetemplates-csharp) (C#)
- * [Microsoft.Extensions.Logging](https://github.com/aspnet/Logging) (C#)
- * [Semlogr](https://github.com/semlogr/semlogr) (Ruby)
- * [Seqlog](https://seqlog.readthedocs.io/en/latest/) (Python)
- * [Serilog](https://serilog.net) (C#)
- * [serilogj](https://github.com/80dB/serilogj) (Java)
- * [structured-log](https://github.com/structured-log/structured-log) (JavaScript)
-
-  _* Converts a custom capturing syntax to message templates for rendering and storage_
-
-Library missing from this list? [Let us know](https://github.com/messagetemplates/messagetemplates.org/issues/new) so that we can add it.
+Dr. Baxevanis from 1988 to 2001 and 2010 was a member of several mountaineering expeditions involving: 4 expeditions to Himalayas http://www.k2news.com/bp2001.htm (highest peak climbed  Cho Oyu, 8.188m; other peaks, Shisha Pangma, 8.027m, Kangri Baltoro, 7.312m, Pumori 7.161m), 3 expeditions to Andes (1998-2001) (Aconcagua, 6,956m and Huana Potosi, 6,045m) and 3 expeditions to Alps, Mont Blanc (4,810m) (1993 and 2008) and Matterhorn (4,475m) (2008). He is also an ultramarathon runner (best record 806KM in 6 days, in 2007; finisher of Spartathlon in 2004) and a chess player (twice winner of the Ammerbuch Tournament (Ammerbuch Meister) in 1980 and 1982, Germany). Last but not least, he is also a fan of good music.
